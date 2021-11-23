@@ -44,7 +44,6 @@ public class RedSocial {
         }
     }
 
-
     public String mostrar() {
         this.list = "";
         inorden(this.raiz);
@@ -60,4 +59,86 @@ public class RedSocial {
         }
     }
 
+    public void eliminar(String pal) {
+        if (buscarABB(pal)) {
+            this.raiz = eliminar(raiz, pal);
+        }
+    }
+
+    private Arbin<Persona> eliminar(Arbin<Persona> r, String pal) {
+        if (r.obtener().equals(pal)) {
+            return borrar(r);
+        } else {
+            if (pal.compareTo(r.obtener().getApellidos()) < 0) {
+                r.enlIzq(eliminar(r.izq(), pal));
+            } else {
+                r.enlDer(eliminar(r.der(), pal));
+            }
+            return r;
+
+        }
+    }
+
+    private Arbin<Persona> borrar(Arbin<Persona> r) {
+        if (r.izq() == null && r.der() == null) {
+            return null;
+        } else if (r.izq() == null) {
+            return r.der();
+        } else if (r.der() == null) {
+            return r.izq();
+        } else {
+            Persona may = mayorABB(r.izq());
+            r.cambiar(may);
+            r.enlIzq(eliminar(r.izq(), may.getApellidos()));
+            return r;
+        }
+    }
+
+    public boolean buscarABB(String pal) {
+        if (raiz == null) {
+            return false;
+        } else {
+            return buscarABB(raiz, pal);
+        }
+    }
+
+    private boolean buscarABB(Arbin<Persona> r, String pal) {
+        if (r.obtener().equals(pal)) {
+            return true;
+        } else {
+            if (pal.compareTo(r.obtener().getApellidos()) < 0) {
+                if (r.izq() == null) {
+                    return false;
+                } else {
+                    return buscarABB(r.izq(), pal);
+                }
+            } else {
+                if (r.der() == null) {
+                    return false;
+                } else {
+                    return buscarABB(r.der(), pal);
+                }
+
+            }
+        }
+    }
+
+        public Persona mayorABB() {
+        if (raiz != null) {
+            return mayorABB(raiz);
+        } else {
+            return null;
+        }
+    }
+
+    private Persona mayorABB(Arbin<Persona> r) {
+        if (r.der() == null) {
+            return r.obtener();
+        } else {
+            return mayorABB(r.der());
+        }
+    }
+
+    
+    
 }
