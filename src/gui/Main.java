@@ -4,12 +4,18 @@
  * and open the template in the editor.
  */
 package gui;
+
+import datos.RedSocial;
 import javax.swing.JFrame;
+
 /**
  *
  * @author davidcerchiaro
  */
 public class Main extends JFrame {
+
+    static private RedSocial mainR = new RedSocial();
+    private AddUsers addUser;
 
     /**
      * Creates new form Main
@@ -17,9 +23,9 @@ public class Main extends JFrame {
     public Main(AddUsers addUsers) {
         initComponents();
         this.addUser = addUsers;
-        
+       
     }
-    private AddUsers addUser;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,11 +101,10 @@ public class Main extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main(new AddUsers()).setVisible(true);
+                new Main(new AddUsers(mainR)).setVisible(true);
             }
         });
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
